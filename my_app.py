@@ -1,26 +1,75 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout
-from random import randint
 
-def show_winner():
-    number = randint(0 , 99)
-    winner.setText(str(number))
-    text.setText('Победитель')
-app = QApplication([])
-main_win = QWidget()
-main_win.setWindowTitle('неГЕнератор')
-main_win.resize(1400 , 700)
+from PyQt5.QtCore import Qt, QTimer, QTime, QLocale
+from PyQt5.QtGui import QDoubleValidator, QIntValidator, QFont # проверка типов вводимых значений
+from PyQt5.QtWidgets import (
+       QApplication, QWidget,
+       QHBoxLayout, QVBoxLayout, QGridLayout,
+       QGroupBox, QRadioButton,
+       QPushButton, QLabel, QListWidget, QLineEdit)
 
-but = QPushButton('Сгенерировать')
-text = QLabel('Нажмите что узнать победителя')
-winner = QLabel('4')
-line = QVBoxLayout()
 
-line.addWidget(text, alignment = Qt.AlignCenter)
-line.addWidget(winner, alignment = Qt.AlignCenter)
-line.addWidget(but, alignment = Qt.AlignCenter)
-main_win.setLayout(line)
+from inst import *
+from second_win import *
 
-but.clicked.connect(show_winner)
-main_win.show()
-app.exec_()
+
+     
+class MainWin(QWidget):
+   def __init__(self):
+       ''' окно, в котором располагается приветствие '''
+       super().__init__()
+
+
+       #устанавливает, как будет выглядеть окно (надпись, размер, место)
+       self.set_appear()
+
+
+       # создаём и настраиваем графические элементы:
+       self.initUI()
+
+
+       #устанавливает связи между элементами
+       self.connects()
+
+
+       # старт:
+       self.show()
+
+
+   def initUI(self):
+       ''' создаёт графические элементы '''
+       self.btn_next = QPushButton(txt_next)
+       self.hello_text = QLabel(txt_hello)
+       self.instruction = QLabel(txt_instruction)
+
+
+       self.layout = QVBoxLayout()
+       self.layout.addWidget(self.hello_text, alignment = Qt.AlignLeft)
+       self.layout.addWidget(self.instruction, alignment = Qt.AlignLeft)
+       self.layout.addWidget(self.btn_next, alignment = Qt.AlignCenter)         
+       self.setLayout(self.layout)
+
+
+  
+   def next_click(self):
+       self.tw = TestWin()
+       self.hide()
+
+
+   def connects(self):
+       self.btn_next.clicked.connect(self.next_click)
+
+
+   ''' устанавливает, как будет выглядеть окно (надпись, размер, место) '''
+   def set_appear(self):
+       self.setWindowTitle(txt_title)
+       self.resize(win_width, win_height)
+       self.move(win_x, win_y)
+
+
+def main():
+   app = QApplication([])
+   mw = MainWin()
+   app.exec_()
+
+
+main()
