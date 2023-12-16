@@ -109,9 +109,3 @@ class FinalWin(QWidget):
        self.setWindowTitle(txt_finalwin)
        self.resize(win_width, win_height)
        self.move(win_x, win_y)
-
-from PyQt5.QtCore import QTime
-
-
-win_x, win_y = 100, 100
-win_width, win_height = 1000, 600
