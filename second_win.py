@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (
        QPushButton, QLabel, QListWidget, QLineEdit)
 
 
-from instr import *
+from inst import *
 from final_win import *
 
 
